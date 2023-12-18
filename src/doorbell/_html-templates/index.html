@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Doorbell Greeter</title>
+
+<script>
+var currentText = 0
+
+window.onload = function(e) {
+  var backspace = document.getElementById("backspace");
+  var texts = document.querySelectorAll("input[type=text]");
+
+  backspace.onclick = function(ev) {
+    ev.preventDefault();
+    currentText = currentText - 1
+    texts[currentText].value = "";
+    texts[currentText].focus();
+  };
+
+  for (i = 0; i <= (texts.length - 2); i++) {
+    texts[i].onkeyup = function(ev) {
+      ev.target.nextElementSibling.focus();
+      currentText = currentText + 1;
+    }
+  }
+
+  texts[0].focus();
+
+  texts[texts.length - 1].onkeyup = function(ev) {
+    document.forms[0].submit();
+  }
+}
+</script>
+
+<style>
+.main {
+  width: 100%;
+}
+.message {
+  width: 100%;
+  text-align: center;
+}
+#text input {
+  width: 5%;
+  margin: 0.5em;
+  font-size: 2em;
+}
+</style>
+
+</head>
+
+<body>
+  <div class="main">
+    <div class="message">
+      Welcome Home
+    </div>
+    <form action="/" method="POST">
+      <div id="text">
+        <input type="text" name="pin" maxlength="1" tabindex="1">
+        <input type="text" name="pin" maxlength="1" tabindex="2">
+        <input type="text" name="pin" maxlength="1" tabindex="3">
+        <input type="text" name="pin" maxlength="1" tabindex="4">
+      </div>
+      <div id="buttons">
+        <button id="backspace" tabindex="-1">&lt;</button>
+        <input type="submit" value="Enter" tabindex="5">
+      </div>
+    </form>
+  </div>
+</body>
+
+</html>
